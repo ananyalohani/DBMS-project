@@ -75,7 +75,7 @@ FOREIGN KEY (OrganizerID) REFERENCES Organizers(OrganizerID) on delete cascade,
 FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade);
 
 CREATE TABLE Volunteers(VolunteerID INT auto_increment,
-Name TEXT NOT NULL, 
+VolunteerName TEXT NOT NULL, 
 Affiliation TEXT NOT NULL, 
 Age INT NOT NULL, 
 Country TEXT NOT NULL, 
@@ -117,15 +117,10 @@ Affiliation TEXT NOT NULL,
 Email TEXT NOT NULL, 
 Nationality TEXT NOT NULL, 
 PRIMARY KEY (TutorID),
-AuthorID int not null,
-FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade);
-
-CREATE TABLE TutorTakesTutorial(
-TutorID INT NOT NULL,
+AuthorID INT NOT NULL,
 TutorialID INT NOT NULL,
-FOREIGN KEY (TutorID) REFERENCES Tutors(TutorID) on delete cascade,
-FOREIGN KEY (TutorialID) REFERENCES Tutorials(TutorialID) on delete cascade
-);
+FOREIGN KEY (TutorialID) REFERENCES Tutorials(TutorialID) on delete cascade,
+FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade);
 
 CREATE TABLE AttendeeAttendsTutorial(
 TutorialID INT NOT NULL,
