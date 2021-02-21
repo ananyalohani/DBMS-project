@@ -137,13 +137,6 @@ FOREIGN KEY (VolunteerID) REFERENCES Volunteers(VolunteerID) on delete cascade,
 FOREIGN KEY (OrganizerID) REFERENCES Organizers(OrganizerID) on delete cascade
 );
 
-CREATE TABLE WorkOrgReportsToOrg(
-WOID INT NOT NULL,
-OrganizerID INT NOT NULL,
-FOREIGN KEY (WOID) REFERENCES WorkshopOrganizers(WOID) on delete cascade,
-FOREIGN KEY (OrganizerID) REFERENCES Organizers(OrganizerID) on delete cascade
-);
-
 CREATE TABLE WorkOrgOrganizesWorkshop(
 WOID INT NOT NULL,
 WorkshopID INT NOT NULL,
