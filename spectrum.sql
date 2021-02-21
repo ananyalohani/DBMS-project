@@ -1,13 +1,13 @@
 create database Spectrum;
 USE Spectrum;
-
+-- drop database Spectrum;
 CREATE TABLE Authors(
 AuthorID INT auto_increment, 
 AuthorName TEXT NOT NULL, 
 Age INT NOT NULL, 
 Nationality TEXT NOT NULL, 
 Email TEXT NOT NULL,
-Present BIT NOT NULL,
+Present CHAR NOT NULL,
 Affiliation TEXT NOT NULL,
 PRIMARY KEY(AuthorID),
 CHECK(Age > 0));
@@ -15,7 +15,7 @@ CHECK(Age > 0));
 CREATE TABLE Organizers(
 OrganizerID INT PRIMARY KEY auto_increment,
 OrgName TEXT NOT NULL,
-Age int NOT NULL,
+Age INT NOT NULL,
 Affiliation TEXT NOT NULL,
 OrgRole TEXT NOT NULL,
 PhoneNumber TEXT NOT NULL,
@@ -41,14 +41,14 @@ Age INT NOT NULL,
 CHECK(Age > 0),
 Affiliation TEXT NOT NULL,
 Email TEXT NOT NULL,
-Present BIT NOT NULL,
+Present CHAR NOT NULL,
 Country TEXT NOT NULL,
 PRIMARY KEY(AttendeeID));
 
 CREATE TABLE AuthorAttendsTutorial(
 TutorialID INT NOT NULL,
 AuthorID INT NOT NULL,
-Present BIT NOT NULL,
+Present CHAR NOT NULL,
 FOREIGN KEY(TutorialID) REFERENCES Tutorials(TutorialID) on delete cascade,
 FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade
 );
@@ -125,7 +125,7 @@ FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade);
 CREATE TABLE AttendeeAttendsTutorial(
 TutorialID INT NOT NULL,
 AttendeeID INT NOT NULL,
-Present BIT NOT NULL,
+Present CHAR NOT NULL,
 FOREIGN KEY (TutorialID) REFERENCES Tutorials(TutorialID) on delete cascade,
 FOREIGN KEY (AttendeeID) REFERENCES ExternalAttendees(AttendeeID) on delete cascade
 );
