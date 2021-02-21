@@ -1,6 +1,6 @@
 create database Spectrum;
 USE Spectrum;
--- drop database Spectrum;
+
 CREATE TABLE Authors(
 AuthorID INT auto_increment, 
 AuthorName TEXT NOT NULL, 
@@ -13,14 +13,15 @@ PRIMARY KEY(AuthorID),
 CHECK(Age > 0));
 
 CREATE TABLE Organizers(
-OrganizerID INT PRIMARY KEY auto_increment,
+OrganizerID INT auto_increment,
 OrgName TEXT NOT NULL,
 Age INT NOT NULL,
 Affiliation TEXT NOT NULL,
 OrgRole TEXT NOT NULL,
 PhoneNumber TEXT NOT NULL,
 Email TEXT NOT NULL,
-Nationality TEXT NOT NULL,CHECK(Age > 0));
+Nationality TEXT NOT NULL,CHECK(Age > 0),
+PRIMARY KEY(OrganizerID));
 
 CREATE TABLE Workshops(
 WorkshopID INT auto_increment,
@@ -68,8 +69,8 @@ WOID INT auto_increment,
 WOName TEXT NOT NULL, 
 Affiliation TEXT NOT NULL, 
 Email TEXT NOT NULL, 
-AuthorID INT NOT NULL,
-OrganizerID INT NOT NULL,
+AuthorID INT,
+OrganizerID INT,
 PRIMARY KEY(WOID),
 FOREIGN KEY (OrganizerID) REFERENCES Organizers(OrganizerID) on delete cascade,
 FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade);
@@ -81,7 +82,7 @@ Age INT NOT NULL,
 Country TEXT NOT NULL, 
 Email TEXT NOT NULL,
 PhoneNumber TEXT,
-WOID INT NOT NULL,
+WOID INT,
 FOREIGN KEY (WOID) REFERENCES WorkshopOrganizers(WOID) on delete cascade,
 PRIMARY KEY(VolunteerID),
 CHECK(Age > 0));
@@ -103,8 +104,8 @@ CREATE TABLE Awards(
 AwardID INT auto_increment, 
 AwardName TEXT NOT NULL, 
 PRIMARY KEY(AwardID),
-PaperID int not null,
-WPaperID int not null,
+PaperID INT,
+WPaperID INT,
 FOREIGN KEY (PaperID) REFERENCES MainTrackPapers(PaperID) on delete cascade,
 FOREIGN KEY (WPaperID) REFERENCES WorkshopPapers(WPaperID) on delete cascade);
 
@@ -117,8 +118,8 @@ Affiliation TEXT NOT NULL,
 Email TEXT NOT NULL, 
 Nationality TEXT NOT NULL, 
 PRIMARY KEY (TutorID),
-AuthorID INT NOT NULL,
-TutorialID INT NOT NULL,
+AuthorID INT,
+TutorialID INT,
 FOREIGN KEY (TutorialID) REFERENCES Tutorials(TutorialID) on delete cascade,
 FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) on delete cascade);
 

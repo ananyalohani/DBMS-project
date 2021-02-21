@@ -1,0 +1,18 @@
+WOID,WOName,Affiliation,Email,AuthorID,OrganizerID
+400001,Emma Brunskill,Stanford University,emmabrunskil@gmail.com,200018,500004
+400002,Thodoris Lykouris,Georgia University of Technology,thodorislykouris@gmail.com,NULL,NULL
+400003,Max Simchowitz,King's College London,maxsimchowitz@gmail.com,NULL,NULL
+400004,Wen Sun,Tsinghua University,wensun@gmail.com,NULL,500004
+400005,Mengdi Wang,University of Korea,doofishmertz@gmail.com,200019,NULL
+400006,Albert S Berahas,Yale University,albertberahas@gmail.com,NULL,NULL
+400007,Amir Gholaminejad,University of Korea,amirgholaminejad@gmail.com,NULL,500004
+400008,Tasos Kyrillidis,Google Research,pikachu237@gmail.com,NULL,NULL
+400009,Michael Mahoney,University of Pennsylvania,michaelmahoney@gmail.com,NULL,NULL
+400010,Fred Roosta,Oxford University,fredroosta@gmail.com,NULL,NULL
+400011,Chin-Wei Huang,Google Research,chinweihuang@gmail.com,NULL,NULL
+400012,David Krueger,Deep Mind Research,davidkrueger@gmail.com,NULL,NULL
+400013,Rianne Van den Berg,Nanyang Technological University,rianneberg@gmail.com,NULL,NULL
+400014,George Papamakarious,Google Brain Research,gerogepapa@gmail.com,200020,NULL
+400015,Chris Cremer,Massachussets Institute of Technology,chriscremer@gmail.com,200021,NULL
+400016,Ricky T.Q. Chen,Cornell University,rickytqchen@gmail.com,200022,NULL
+400017,Danilo J. Rezende,Deep Mind Research,danilorezende@gmail.com,200023,NULL
