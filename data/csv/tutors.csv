@@ -1,0 +1,5 @@
+TutorID,TutorName,Age,Affiliation,Email,Nationality,AuthorID,TutorialID
+800001,Danilo J. Rezende,29,Deep Mind Research,danilorezende@gmail.com,UK,200023,1000001
+800002,Abhinav Gupta,43,Carnegie Mellon University,abhinavgupta@gmail.com,India,200011,1000001
+800003,Yann LeCunn,60,New York University,yannlecunn@gmail.com,France,NULL,1000002
+800004,Ian Goodfellow,30,Apple Research,goodfellow@gmail.com,USA,NULL,1000003

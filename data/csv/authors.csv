@@ -1,0 +1,24 @@
+AuthorID,AuthorName,Age,Affiliation,Nationality,Email,Present
+200001,Pulkit Sharma,36,Indian Institute of Technology Patna,India,pulkitsharma@gmail.com,P
+200002,Ting Chen,31,Stanford University,China,tingchen@gmail.com,P
+200003,Ben Poole,38,Google Research,USA,benpoole@gmail.com,A
+200004,Michal Valko,47,Deep Mind Research,Russia,michalvalko@gmail.com,P
+200005,Pierre Gaillard,26,Nanyang Technological University,France,pierregaillard@gmail.com,P
+200006,Geoffrey Hinton,26,Google Brain Research,USA,geoffreyhinton@gmail.com,P
+200007,Francesco Locatello,33,Massachussets Institute of Technology,Italy,francescolocatello@gmail.com,P
+200008,Alexandra Carpentier,28,Cornell University,France,alexandracarpentier@gmail.com,P
+200009,Vinayak Abrol,27,Indraprastha Insitute of Information Technology Delhi,India,vinayakabrol@gmail.com,P
+200010,Tanmay Shankar,48,Carnegie Mellon University,India,tanmayshankar@gmail.com,A
+200011,Abhinav Gupta,48,Carnegie Mellon University,India,abhinavgupta@gmail.com,P
+200012,Anne Gael Manegueu,33,University of British Columbia,Denmark,annegael@gmail.com,P
+200013,Abhishek Kumar,39,Princeton University,India,abhishekkumar@gmail.com,P
+200014,Bernhard Schölkopf,47,Google Research,Germany,bernhardscholkopf@gmail.com,P
+200015,Jean Tarbouriech,46,Hong Kong University of Science and Technology,France,jeantarbouriech@gmail.com,A
+200016,Yao Liu,30,Stanford University,USA,tomandjerry123@gmail.com,A
+200017,Pierre-Luc Bacon,30,University of Montreal,Canada,scoobydooby456@gmaill,P
+200018,Emma Brunskill,27,Stanford University,USA,emmabrunskill@gmail.com,A
+200019,Mengdi Wang,40,Princeton University,USA,doofishmertz@gmail.com,P
+200020,George Papamakarious,43,Google Brain Research,Canada,gerogepapa@gmail.com,P
+200021,Chris Cremer,48,Massachussets Institute of Technology,USA,chriscremer@gmail.com,P
+200022,Ricky T.Q. Chen,48,Cornell University,USA,rickytqchen@gmail.com,P
+200023,Danilo J. Rezende,41,Deep Mind Research,UK,danilorezende@gmail.com,P

@@ -1,0 +1,11 @@
+AttendeeID,AttendeeName,Age,Affiliation,Email,Present,Country
+1100001,Lillian Friedman,24,Georgia University of Technology,lillianfman@gmail.com,P,USA
+1100002,Freddie Cowan,35,Carnegie Mellon University,freddiecowan@gmail.com,P,USA
+1100003,Rania O'Reilly,29,University of California Berkeley,raniareilly@gmail.com,P,USA
+1100004,Sanaya O'Gallagher,37,Columbia University,sanayagal@gmail.com,P,USA
+1100005,Izaak Bullock,20,University of California Berkeley,izaakbull@gmail.com,A,USA
+1100006,Caprice Padilla,34,University of California San Diego,capricepadilla@gmail.com,P,USA
+1100007,Blanche Lam,23,New York University,blanchelam@gmail.com,A,USA
+1100008,Halimah Gale,28,University of California Los Angeles,halimahgale@gmail.com,P,USA
+1100009,Jethro Davison,44,Massachussets Institute of Technology,jethrodavison@gmail.com,P,USA
+1100010,Ewan Murillo,40,University of California Berkeley,ewanmurillo@gmail.com,P,USA

@@ -1,0 +1,6 @@
+AwardID,AwardName,PaperID,WPaperID
+900001,Best Paper Award,100008,NULL
+900002,Honorable Mention,100006,NULL
+900003,Best Paper in Workshop: Theoretical Foundations of Reinforcement Learning,NULL,600002
+900004,Best Paper in Workshop: INNF+: Invertible Neural Networks Normalizing Flows and Explicit Likelihood Models,NULL,600004
+900005,Best Paper in Workshop: Beyond first order methods in machine learning systems,NULL,600005
