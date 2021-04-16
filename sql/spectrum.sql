@@ -1,4 +1,4 @@
-create database Spectrum;
+CREATE DATABASE Spectrum;
 USE Spectrum;
 
 CREATE TABLE Authors(

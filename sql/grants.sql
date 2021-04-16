@@ -12,14 +12,6 @@ TO 'Organizer'@'localhost';
 
 -- author
 GRANT SELECT
-ON Vw_FellowMainTrackAuthors
-TO 'Author'@'localhost';
-
-GRANT SELECT
-ON Vw_FellowWorkshopAuthors
-TO 'Author'@'localhost';
-
-GRANT SELECT
 ON Vw_MainTrackAwards
 TO 'Author'@'localhost';
 
@@ -34,6 +26,10 @@ TO 'Author'@'localhost';
 GRANT SELECT
 ON Organizers
 TO 'Author'@'localhost';
+
+GRANT SELECT
+ON Vw_WorkshopAwards
+TO 'Author'@'localhost'
 
 -- workshop organizer
 GRANT SELECT
