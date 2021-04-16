@@ -1,174 +1,176 @@
-SELECT DISTINCT MainTrackAuthors.PaperID, Title from Authors
+-- declare all server variables
+DECLARE @AuthorID INT;
+DECLARE @OrganizerID INT;
+DECLARE @VolunteerID INT;
+DECLARE @TutorID INT;
+DECLARE @WorkOrgID INT;
+
+-- papers published from author's affiliation
+-- references @AuthorID
+SET @AuthorID = 200003;
+
+SELECT DISTINCT MainTrackAuthors.PaperID, Title
+FROM Authors
 JOIN MainTrackAuthors
 ON Authors.AuthorID = MainTrackAuthors.AuthorID 
 JOIN MainTrackPapers 
 ON MainTrackAuthors.PaperID = MainTrackPapers.PaperID 
 WHERE Authors.Affiliation IN 
 (
-	SELECT Affiliation from Authors
-	WHERE AuthorID = 200003
+  SELECT Affiliation 
+  FROM Authors
+  WHERE AuthorID = @AuthorID
 );
 
-SELECT DISTINCT Authors.AuthorID, AuthorName from Authors
+-- fellow authors who won awards
+-- references @AuthorID
+SET @AuthorID = 200008;
+
+SELECT Vw_MainTrackAwards.AuthorID, AuthorName, AwardName
+FROM Vw_MainTrackAwards 
 JOIN MainTrackAuthors
-ON Authors.AuthorID = MainTrackAuthors.AuthorID
-JOIN Awards
-ON Awards.PaperID = MainTrackAuthors.PaperID
-JOIN WorkshopPapers
-ON Awards.WPaperID = Awards.WPaperID
-WHERE Authors.AuthorID = 200015;
-
-SELECT * from Authors 
-WHERE AuthorID IN
-(
-	(
-		SELECT DISTINCT AuthorID from Authors
-		JOIN MainTrackAuthors
-		ON Authors.AuthorID = MainTrackAuthors.AuthorID
-		JOIN Awards
-		ON Awards.PaperID = MainTrackAuthors.PaperID
-	)
-	UNION ALL
-	(
-		SELECT DISTINCT AuthorID from Authors
-		JOIN WkshpPaperAuthors
-		ON Authors.AuthorID = WkshpPaperAuthors.AuthorID
-		JOIN Awards
-		ON Awards.WPaperID = WkshpPaperAuthors.WPaperID
-	)
-)
-AND AuthorID <> 200008;
-
-SELECT AuthorID, PaperID, WPaperID from Authors, Awards
-WHERE AuthorID IN
-(
-	SELECT DISTINCT Authors.AuthorID from Authors, MainTrackAuthors, Awards
-	WHERE Authors.AuthorID = MainTrackAuthors.AuthorID
-	AND Awards.PaperID = MainTrackAuthors.PaperID
-)
-OR AuthorID IN
-(
-	SELECT DISTINCT Authors.AuthorID from Authors, WkshpPaperAuthors, Awards
-	WHERE Authors.AuthorID = WkshpPaperAuthors.AuthorID
-	AND Awards.WPaperID = WkshpPaperAuthors.WPaperID
-)
-AND AuthorID = 200008;
-
-SELECT Organizers.OrganizerID, OrgName from Organizers
-JOIN VolunteerReportsToOrganizers
-ON Organizers.OrganizerID = VolunteerReportsToOrganizers.OrganizerID
-JOIN Volunteers 
-ON Volunteers.VolunteerID = VolunteerReportsToOrganizers.VolunteerID
-WHERE Volunteers.VolunteerID = 700006;
-
--- fellow volunteers that I report to
-SELECT DISTINCT Volunteers.VolunteerID, VolunteerName from Volunteers
-JOIN VolunteerReportsToOrganizers
-ON Volunteers.VolunteerID = VolunteerReportsToOrganizers.VolunteerID
-JOIN Organizers 
-ON Organizers.OrganizerID = VolunteerReportsToOrganizers.OrganizerID
-WHERE Organizers.OrganizerID IN
-(
-	SELECT Organizers.OrganizerID from Organizers
-	JOIN VolunteerReportsToOrganizers
-	ON Organizers.OrganizerID = VolunteerReportsToOrganizers.OrganizerID
-	JOIN Volunteers 
-	ON Volunteers.VolunteerID = VolunteerReportsToOrganizers.VolunteerID
-	WHERE Volunteers.VolunteerID = 700006
-) 
-AND Volunteers.VolunteerID <> 700006;
-
--- fellow main track authors
-CREATE VIEW FellowMainTrackAuthors AS
-SELECT DISTINCT AuthorID from MainTrackAuthors
+ON MainTrackAuthors.AuthorID = Vw_MainTrackAwards.AuthorID
 JOIN MainTrackPapers
 ON MainTrackAuthors.PaperID = MainTrackPapers.PaperID 
+JOIN Authors 
+ON Vw_MainTrackAwards.AuthorID = Authors.AuthorID
 WHERE MainTrackAuthors.PaperID IN
 (
-	SELECT DISTINCT PaperID FROM MainTrackAuthors
-	WHERE AuthorID = 200008
+  SELECT DISTINCT PaperID
+  FROM MainTrackAuthors
+  WHERE MainTrackAuthors.AuthorID = @AuthorID
 )
-AND AuthorID <> 200008;
-
--- fellow workshop authors
-CREATE VIEW FellowWorkshopAuthors AS
-SELECT DISTINCT AuthorID from WkshpPaperAuthors
+AND Authors.AuthorID <> @AuthorID
+UNION
+SELECT Vw_WorkshopAwards.AuthorID, AuthorName, AwardName
+FROM Vw_WorkshopAwards 
+JOIN WkshpPaperAuthors
+ON WkshpPaperAuthors.AuthorID = Vw_WorkshopAwards.AuthorID
 JOIN WorkshopPapers
 ON WkshpPaperAuthors.WPaperID = WorkshopPapers.WPaperID 
+JOIN Authors 
+ON Vw_WorkshopAwards.AuthorID = Authors.AuthorID
 WHERE WkshpPaperAuthors.WPaperID IN
 (
-	SELECT DISTINCT WPaperID FROM WkshpPaperAuthors
-	WHERE AuthorID = 200008
+  SELECT DISTINCT WPaperID
+  FROM WkshpPaperAuthors
+  WHERE WkshpPaperAuthors.AuthorID = @AuthorID
 )
-AND AuthorID <> 200008;
+AND Authors.AuthorID <> @AuthorID;
 
--- main track authors who won awards
-CREATE VIEW MainTrackAwards AS
-SELECT AuthorID, AwardName from Awards
-JOIN MainTrackAuthors
-ON MainTrackAuthors.PaperID = Awards.PaperID;
+-- organizers that the volunteer reports to
+-- references @VolunteerID;
+SET @VolunteerID = 700006;
 
--- wkshp paper authors who won awards
-CREATE VIEW WorkshopAwards AS
-SELECT AuthorID, AwardName from Awards
-JOIN WkshpPaperAuthors
-ON Awards.WPaperID = WkshpPaperAuthors.WPaperID;
+SELECT OrganizerID, OrgName
+FROM Vw_Volunteers_Organizers
+WHERE VolunteerID = @VolunteerID;
 
--- fellow authors who won awards
-SELECT MainTrackAwards.AuthorID, AuthorName, AwardName FROM MainTrackAwards 
-JOIN FellowMainTrackAuthors 
-ON FellowMainTrackAuthors.AuthorID = MainTrackAwards.AuthorID
-JOIN Authors 
-ON MainTrackAwards.AuthorID = Authors.AuthorID
-UNION
-SELECT WorkshopAwards.AuthorID, AuthorName, AwardName FROM WorkshopAwards 
-JOIN FellowWorkshopAuthors 
-ON FellowWorkshopAuthors.AuthorID = WorkshopAwards.AuthorID
-JOIN Authors 
-ON WorkshopAwards.AuthorID = Authors.AuthorID;
+-- fellow volunteers (based on common organizer)
+-- references @VolunteerID;
+SET @VolunteerID = 700006;
 
-SELECT Organizers.OrganizerID, OrgName from Organizers
-JOIN VolunteerReportsToOrganizers
-ON Organizers.OrganizerID = VolunteerReportsToOrganizers.OrganizerID
-JOIN Volunteers 
-ON Volunteers.VolunteerID = VolunteerReportsToOrganizers.VolunteerID
-WHERE Volunteers.VolunteerID = 700006;
-
-
-SELECT DISTINCT Authors.AuthorID, AwardName from Authors
-JOIN MainTrackAuthors
-ON Authors.AuthorID = MainTrackAuthors.AuthorID
-JOIN WkshpPaperAuthors
-ON Authors.AuthorID = WkshpPaperAuthors.AuthorID
-JOIN Awards
-ON Awards.PaperID = MainTrackAuthors.PaperID 
-AND Awards.WPaperID = WkshpPaperAuthors.WPaperID		
-WHERE (Authors.AuthorID IN
+SELECT DISTINCT VolunteerID, Name
+FROM Vw_Volunteers_Organizers
+WHERE OrganizerID IN
 (
-	SELECT DISTINCT Authors.AuthorID from Authors, MainTrackAuthors, Awards
-	WHERE Authors.AuthorID = MainTrackAuthors.AuthorID
-	AND Awards.PaperID = MainTrackAuthors.PaperID
-)
-OR Authors.AuthorID IN
-(
-	SELECT DISTINCT Authors.AuthorID from Authors, WkshpPaperAuthors, Awards
-	WHERE Authors.AuthorID = WkshpPaperAuthors.AuthorID
-	AND Awards.WPaperID = WkshpPaperAuthors.WPaperID
-))
-AND (Authors.AuthorID IN 
-(
-	SELECT DISTINCT Authors.AuthorID from MainTrackAuthors where PaperID in (select PaperID from MainTrackAuthors where Authors.AuthorID = 200008)
-)
-OR Authors.AuthorID IN 
-(
-	SELECT DISTINCT Authors.AuthorID from WkshpPaperAuthors where WPaperID in (select WPaperID from WkshpPaperAuthors where Authors.AuthorID = 200008)
-))
-AND Authors.AuthorID <> 200008;
+  SELECT Organizers.OrganizerID
+  FROM Organizers
+  JOIN VolunteerReportsToOrganizers
+  ON Organizers.OrganizerID = VolunteerReportsToOrganizers.OrganizerID
+  JOIN Volunteers 
+  ON Volunteers.VolunteerID = VolunteerReportsToOrganizers.VolunteerID
+  WHERE Volunteers.VolunteerID = @VolunteerID
+) 
+AND VolunteerID <> @VolunteerID;
 
+-- volunteers reporting to organizer
+-- references @OrganizerID
+SET @OrganizerID = 500007;
 
+SELECT VolunteerID, VolunteerName
+FROM Vw_Organizers_Volunteers
+WHERE OrganizerID = @OrganizerID;
 
-select (MainTrackPapers.PaperID, Title, Affiliation) from MainTrackPapers
-join MainTrackAuthors on
-MainTrackPapers.PaperID = MainTrackAuthors.PaperID
-join Authors on
-Authors.AuthorID = MainTrackAuthors.AuthorID;
+-- workshop organizers reporting to organizer
+-- references @OrganizerID
+SET @OrganizerID = 500004;
+
+SELECT WOID, WOName
+FROM Vw_Organizers_WorkOrg
+WHERE OrganizerID = @OrganizerID;
+
+-- fellow organizer (based on common role)
+-- references @OrganizerID
+SET @OrganizerID = 500007;
+
+SELECT OrganizerID, OrgName
+FROM Organizers
+WHERE OrganizerID <> @OrganizerID 
+AND OrgRole IN
+(
+  SELECT OrgRole
+  FROM Organizers
+  WHERE OrganizerID = @OrganizerID
+);
+
+-- number of people registered for tutor's talks 
+-- references @TutorID
+SET @TutorID = 800004;
+
+SELECT COUNT(*) as NumberOfAttendees
+FROM AttendeeAttendsTutorial
+WHERE TutorialID IN
+(
+  SELECT TutorialID
+  FROM tutors
+  WHERE TutorID = @TutorID
+);
+
+-- names of attendees in tutor's tutorial who are authors
+-- references @TutorID
+SET @TutorID = 800004;
+
+SELECT DISTINCT AuthorID, AuthorName
+FROM Authors
+WHERE AuthorID IN
+(
+  SELECT AuthorID
+  FROM AuthorAttendsTutorial
+  WHERE TutorialID IN
+  (
+    SELECT TutorialID
+    FROM tutors
+    WHERE TutorID = @TutorID
+  )
+);
+
+-- tutorial details
+SELECT * FROM Vw_TutorialTimings;
+
+-- contact details of volunteers
+SELECT VolunteerID, VolunteerName, Email, PhoneNumber
+FROM Volunteers;
+
+-- contact details of organizers
+SELECT OrganizerID, OrgName, Email, PhoneNumber
+FROM Organizers;
+
+-- papers that won awards in workshop organizer's workshop
+-- references @WorkOrgID
+SET @WorkOrgID = 400004;
+
+SELECT Awards.WPaperID, Title, AwardName as Award
+FROM Awards
+JOIN WorkshopPapers
+ON Awards.WPaperID = WorkshopPapers.WPaperID
+JOIN WorkOrgOrganizesWorkshop
+ON WorkOrgOrganizesWorkshop.WorkshopID = WorkshopPapers.WorkshopID
+WHERE WOID = @WorkOrgID;
+
+-- volunteers in workshop organizer's workshop
+SET @WorkOrgID = 400005;
+
+SELECT VolunteerID, VolunteerName
+FROM Vw_WorkOrg_Volunteers
+WHERE WOID = @WorkOrgID;
