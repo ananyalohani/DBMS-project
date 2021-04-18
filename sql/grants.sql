@@ -29,7 +29,7 @@ TO 'Author'@'localhost';
 
 GRANT SELECT
 ON Vw_WorkshopAwards
-TO 'Author'@'localhost'
+TO 'Author'@'localhost';
 
 -- workshop organizer
 GRANT SELECT
